@@ -23,7 +23,7 @@ import clases.IPUtils;
  */
 @WebServlet(urlPatterns = {"/ExportarProcesoServlet"})
 public class ExportarProcesoServlet extends HttpServlet {
-
+//Esta es una prueba para verificar si el conmit funcionó
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
