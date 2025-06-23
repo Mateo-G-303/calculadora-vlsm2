@@ -64,7 +64,7 @@ public class ExportarProcesoServlet extends HttpServlet {
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
             Font font = FontFactory.getFont(FontFactory.COURIER, 12);
 
-            document.add(new Paragraph("Proceso jerárquico VLSM (bit a bit)", titleFont));
+            document.add(new Paragraph("Proceso VLSM con método de bit a bit", titleFont));
             document.add(new Paragraph("IP base: " + ipBase + "/" + prefijoBase + "\n", font));
             document.add(new Paragraph("Llamando a dividirYMostrar con IP: " + ipBase + "/" + prefijoBase, font));
             document.add(new Paragraph("Hosts: " + necesidades.toString(), font));
