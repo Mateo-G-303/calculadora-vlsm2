@@ -1,21 +1,15 @@
-# Usa una imagen base con JDK 17
-FROM openjdk:17-jdk-slim
+# Imagen base de Tomcat (compatible con Java 8)
+FROM tomcat:9.0-jdk8
 
-# Instala wget, unzip y Tomcat 9
-RUN apt-get update && apt-get install -y wget unzip && \
-    wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.zip && \
-    unzip apache-tomcat-9.0.85.zip && \
-    mv apache-tomcat-9.0.85 /opt/tomcat && \
-    rm apache-tomcat-9.0.85.zip
+# Elimina las apps por defecto de Tomcat
+RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Crea directorio de despliegue para tu proyecto
-RUN mkdir -p /opt/tomcat/webapps/ROOT
+# Copia el archivo WAR generado por Maven (ajusta el nombre si cambia)
+COPY target/CALCULADORAVLSMWEB-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
 
-# Copia el WAR ya compilado al directorio de despliegue
-COPY target/*.war /opt/tomcat/webapps/ROOT.war
-
-# Expone el puerto 8080 (Render lo detectará)
+# Render usa esta variable para determinar el puerto expuesto
 EXPOSE 8080
+ENV PORT 8080
 
-# Inicia Tomcat
-CMD ["/opt/tomcat/bin/catalina.sh", "run"]
+# Comando para iniciar Tomcat
+CMD ["catalina.sh", "run"]
