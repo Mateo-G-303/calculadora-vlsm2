@@ -109,6 +109,8 @@ public class IPUtils {
             int[] contadorSubred
     ) throws DocumentException {
 
+        doc.add(new Paragraph("Debug: " + ip + "/" + prefijo, font));
+
         if (prefijo > 30) {
             return;
         }
