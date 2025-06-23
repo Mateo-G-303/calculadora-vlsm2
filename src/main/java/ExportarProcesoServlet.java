@@ -66,12 +66,11 @@ public class ExportarProcesoServlet extends HttpServlet {
 
             document.add(new Paragraph("Proceso jerárquico VLSM (bit a bit)", titleFont));
             document.add(new Paragraph("IP base: " + ipBase + "/" + prefijoBase + "\n", font));
-
+            document.add(new Paragraph("Llamando a dividirYMostrar con IP: " + ipBase + "/" + prefijoBase, font));
+            document.add(new Paragraph("Hosts: " + necesidades.toString(), font));
             int[] contadorSubred = {1};
-            doc.add(new Paragraph("Llamando a dividirYMostrar con IP: " + ipBase + "/" + prefijoBase, font));
-            doc.add(new Paragraph("Hosts: " + necesidades.toString(), font));
-
-            IPUtils.dividirYMostrar(ipBase, prefijoBase, 0, necesidadesClonadas, document, font, contadorSubred);
+            
+            IPUtils.dividirYMostrar(ipBase, prefijoBase, 0, necesidades, document, font, contadorSubred);
 
         } catch (DocumentException e) {
             throw new IOException("Error al generar PDF: " + e.getMessage());
