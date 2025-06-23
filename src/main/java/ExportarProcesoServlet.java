@@ -68,8 +68,10 @@ public class ExportarProcesoServlet extends HttpServlet {
             document.add(new Paragraph("IP base: " + ipBase + "/" + prefijoBase + "\n", font));
 
             int[] contadorSubred = {1};
-            ArrayList<Integer> necesidadesClonadas = new ArrayList<>(necesidades);
-IPUtils.dividirYMostrar(ipBase, prefijoBase, 0, necesidadesClonadas, document, font, contadorSubred);
+            doc.add(new Paragraph("Llamando a dividirYMostrar con IP: " + ipBase + "/" + prefijoBase, font));
+            doc.add(new Paragraph("Hosts: " + necesidades.toString(), font));
+
+            IPUtils.dividirYMostrar(ipBase, prefijoBase, 0, necesidadesClonadas, document, font, contadorSubred);
 
         } catch (DocumentException e) {
             throw new IOException("Error al generar PDF: " + e.getMessage());
