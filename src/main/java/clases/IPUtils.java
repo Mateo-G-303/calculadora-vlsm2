@@ -41,7 +41,6 @@ public class IPUtils {
         int[] nuevaIP = copiarIP(ip);
         nuevaIP[3] += cantidad;
 
-        // Acarreo de octetos de derecha a izquierda
         for (int i = 3; i > 0; i--) {
             if (nuevaIP[i] >= 256) {
                 int exceso = nuevaIP[i] / 256;
@@ -50,7 +49,6 @@ public class IPUtils {
             }
         }
 
-        // Validación del primer octeto (máximo 255)
         if (nuevaIP[0] >= 256) {
             nuevaIP[0] = 255;
             nuevaIP[1] = 255;

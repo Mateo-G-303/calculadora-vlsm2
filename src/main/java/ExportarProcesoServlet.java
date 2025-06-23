@@ -2,6 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +29,7 @@ import clases.IPUtils;
  */
 @WebServlet(urlPatterns = {"/ExportarProcesoServlet"})
 public class ExportarProcesoServlet extends HttpServlet {
-//Esta es una prueba para verificar si el conmit funcionó (pb2)
+//Esta es una prueba para verificar si el conmit funcionó (pb33)
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
