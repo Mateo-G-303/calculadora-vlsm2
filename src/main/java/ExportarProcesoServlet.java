@@ -3,14 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 import clases.IPUtils;
-import static clases.IPUtils.calcularHosts;
-import static clases.IPUtils.convertirArrayAIP;
-import static clases.IPUtils.convertirIPaArray;
-import static clases.IPUtils.sumarAIP;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,8 +54,11 @@ public class ExportarProcesoServlet extends HttpServlet {
         response.setHeader("Content-Disposition", "attachment; filename=proceso_vlsm.pdf");
 
         Document document = new Document();
+        OutputStream out = null;
+
         try {
-            PdfWriter.getInstance(document, response.getOutputStream());
+            out = response.getOutputStream();
+            PdfWriter.getInstance(document, out);
             document.open();
 
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
@@ -70,49 +70,16 @@ public class ExportarProcesoServlet extends HttpServlet {
             int[] contadorSubred = {1};
             IPUtils.dividirYMostrar(ipBase, prefijoBase, 0, necesidades, document, font, contadorSubred);
 
-            document.close();
         } catch (DocumentException e) {
             throw new IOException("Error al generar PDF: " + e.getMessage());
+        } finally {
+            if (document.isOpen()) {
+                document.close();
+            }
+            if (out != null) {
+                out.close();
+            }
         }
-    }
-
-    public static void dividirYMostrar(
-            String ip, int prefijo, int nivel,
-            ArrayList<Integer> necesidades,
-            Document doc, Font font,
-            int[] contadorSubred
-    ) throws DocumentException {
-        if (prefijo > 30) {
-            return;
-        }
-
-        int capacidad = calcularHosts(32 - prefijo);
-        String linea = " ".repeat(nivel * 2) + ip + "/" + prefijo;
-
-        if (!necesidades.isEmpty() && capacidad == necesidades.get(0) + 2) {
-            linea += " ==> Subred " + contadorSubred[0]++;
-            necesidades.remove(0);
-            doc.add(new Paragraph(linea, font));
-            return;
-        }
-
-        doc.add(new Paragraph(linea, font));
-
-        if (necesidades.isEmpty()) {
-            return;
-        }
-
-        int nuevoPrefijo = prefijo + 1;
-        int salto = calcularHosts(32 - nuevoPrefijo);
-
-        int[] ipArr1 = convertirIPaArray(ip);
-        int[] ipArr2 = sumarAIP(ipArr1, salto);
-
-        String ip1 = convertirArrayAIP(ipArr1);
-        String ip2 = convertirArrayAIP(ipArr2);
-
-        dividirYMostrar(ip1, nuevoPrefijo, nivel + 1, necesidades, doc, font, contadorSubred);
-        dividirYMostrar(ip2, nuevoPrefijo, nivel + 1, necesidades, doc, font, contadorSubred);
     }
 
     @Override
