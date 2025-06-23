@@ -135,12 +135,13 @@
             <button type="submit">Exportar a PDF</button>
         </form>
 
-        <form action="ExportarPROCESOServlet" method="post" target="_blank">
+        <form action="ExportarProcesoServlet" method="post">
             <input type="hidden" name="ipBase" value="<%= request.getParameter("ipBase")%>">
-            <input type="hidden" name="prefijoBase" value="<%= request.getParameter("prefijoBase") %>">
+            <input type="hidden" name="prefijoBase" value="<%= request.getParameter("prefijoBase")%>">
             <input type="hidden" name="hosts" value="<%= hostsComas.toString()%>">
             <button type="submit">Exportar a PDF (Proceso)</button>
         </form>
+
         <%
             }
         %>
